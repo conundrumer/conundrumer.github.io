@@ -1,35 +1,33 @@
+<!DOCTYPE html>
 <html>
-  <head>
-    <title>Remote Soundwalk</title>
-    <script src="//static.opentok.com/webrtc/v2.2/js/opentok.min.js" ></script>
-    <script type="text/javascript">
-      // Initialize API key, session, and token...
-      // Think of a session as a room, and a token as the key to get in to the room
-      // Sessions and tokens are generated on your server and passed down to the client
-      var apiKey = "44725242";
-      var sessionId = "2_MX40NDcyNTI0Mn5-VHVlIEFwciAwOCAxNjo1OTozMSBQRFQgMjAxNH4wLjkwNjQyMjR-fg";
-      var token = "T1==cGFydG5lcl9pZD00NDcyNTI0MiZzZGtfdmVyc2lvbj10YnJ1YnktdGJyYi12MC45MS4yMDExLTAyLTE3JnNpZz02MzIxYTNmOGM3NDBhNWU0MTRlZGE1MWRiMzFlNmEzNjE1NjIzNDk0OnJvbGU9cHVibGlzaGVyJnNlc3Npb25faWQ9Ml9NWDQwTkRjeU5USTBNbjUtVkhWbElFRndjaUF3T0NBeE5qbzFPVG96TVNCUVJGUWdNakF4Tkg0d0xqa3dOalF5TWpSLWZnJmNyZWF0ZV90aW1lPTEzOTcwMDE1OTAmbm9uY2U9MC45MjAwODMxNzIyNjI5ODI2JmV4cGlyZV90aW1lPTEzOTc2MDYyMjkmY29ubmVjdGlvbl9kYXRhPQ==";
-
-      // Initialize session, set up event listeners, and connect
-      var session = OT.initSession(apiKey, sessionId);
-
-      session.on("streamCreated", function(event) {
-        session.subscribe(event.stream, "mySubscriberDiv", {
-          subscribeToAudio:true,
-          subscribeToVideo:false
+    <head>
+        <script src="http://simplewebrtc.com/latest.js"></script> 
+        <style>
+            #remoteVideos video {
+                height: 150px;
+            }
+            #localVideo {
+                height: 150px;
+            }
+        </style>
+        <script>
+        var webrtc = new SimpleWebRTC({
+            // the id/element dom element that will hold "our" video
+            localVideoEl: 'localVideo',
+            // the id/element dom element that will hold remote videos
+            remoteVideosEl: 'remoteVideos',
+            // immediately ask for camera access
+            autoRequestMedia: true
         });
-      });
-
-      session.connect(token, function(error) {
-        if (error) {
-          alert("Failed to connect!");
-        }
-      });
-
-    </script>
-  </head>
-  <body>
-    <h1>Soundwalk listener</h1>
-    <div id="mySubscriberDiv">waiting for connection</div>
-  </body>
+        // we have to wait until it's ready
+        webrtc.on('readyToCall', function () {
+            // you can name it anything
+            webrtc.joinRoom('soundwalk');
+        });
+        </script>
+    </head>
+    <body>
+        <video id="localVideo"></video>
+        <div id="remoteVideos"></div>
+    </body>
 </html>
