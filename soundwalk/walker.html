@@ -1,0 +1,29 @@
+<html>
+  <head>
+    <title>Remote Soundwalk</title>
+    <script src='https://swww.tokbox.com/webrtc/v2.0/js/TB.min.js'></script>
+    <script type="text/javascript">
+      // Initialize API key, session, and token...
+      // Think of a session as a room, and a token as the key to get in to the room
+      // Sessions and tokens are generated on your server and passed down to the client
+      var apiKey = "44725242";
+      var sessionId = "2_MX40NDcyNTI0Mn5-VHVlIEFwciAwOCAxNjo1OTozMSBQRFQgMjAxNH4wLjkwNjQyMjR-fg";
+      var token = "T1==cGFydG5lcl9pZD00NDcyNTI0MiZzZGtfdmVyc2lvbj10YnJ1YnktdGJyYi12MC45MS4yMDExLTAyLTE3JnNpZz02MzIxYTNmOGM3NDBhNWU0MTRlZGE1MWRiMzFlNmEzNjE1NjIzNDk0OnJvbGU9cHVibGlzaGVyJnNlc3Npb25faWQ9Ml9NWDQwTkRjeU5USTBNbjUtVkhWbElFRndjaUF3T0NBeE5qbzFPVG96TVNCUVJGUWdNakF4Tkg0d0xqa3dOalF5TWpSLWZnJmNyZWF0ZV90aW1lPTEzOTcwMDE1OTAmbm9uY2U9MC45MjAwODMxNzIyNjI5ODI2JmV4cGlyZV90aW1lPTEzOTc2MDYyMjkmY29ubmVjdGlvbl9kYXRhPQ==";
+
+      // Initialize session, set up event listeners, and connect
+      var session = TB.initSession(sessionId);
+      session.addEventListener('sessionConnected', sessionConnectedHandler);
+      session.connect(apiKey, token);
+      
+      function sessionConnectedHandler(event) {
+        var publisher = TB.initPublisher(apiKey, 'myPublisherDiv');
+        publisher.publishVideo(false);
+        session.publish(publisher);
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Soundwalk walker</h1>
+    <div id="myPublisherDiv"></div>
+  </body>
+</html>
